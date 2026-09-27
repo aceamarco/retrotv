@@ -272,7 +272,7 @@
       case "mute": video.muted = !video.muted; $("muteBtn").classList.toggle("on", video.muted); showVol(); break;
       case "guide": toggleGuide(); break;
       case "full": {
-        const el = $("screen");
+        const el = tvEl.classList.contains("photo") ? stage : $("screen");
         if (document.fullscreenElement) document.exitFullscreen();
         else if (el.requestFullscreen) el.requestFullscreen();
         else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen();
@@ -286,7 +286,7 @@
   $("screen").addEventListener("click", (e) => { if (on && e.target !== boot && !boot.contains(e.target)) act("chup"); });
 
   document.addEventListener("keydown", (e) => {
-    if (e.target.tagName === "INPUT") return;
+    if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
     if (e.key >= "0" && e.key <= "9") {
       typed += e.key; showOsd(typed.padStart(2, "-"));
       clearTimeout(typedTimer);
@@ -294,10 +294,48 @@
       if (typed.length >= 2) commit(); else typedTimer = setTimeout(commit, 1200);
       return;
     }
+    if (e.key === "t" || e.key === "T") { cycleFrame(e.shiftKey ? -1 : 1); return; }
     const map = { ArrowUp: "chup", ArrowDown: "chdown", ArrowRight: "volup", ArrowLeft: "voldown", m: "mute", f: "full", g: "guide", p: "power", Escape: null };
     if (e.key === "Escape") { toggleGuide(false); return; }
     if (e.key in map) { e.preventDefault(); act(map[e.key]); }
   });
+
+  /* ---------- TV set frames ---------- */
+  let frames = [];
+  const tvEl = $("tv"), stage = $("stage"), bezel = $("bezel"), frameImg = $("frameImg"), frameSel = $("frameSel"), frameCredit = $("frameCredit");
+  function applyFrame(id) {
+    const f = frames.find((x) => x.id === id);
+    try { localStorage.setItem("retrotv.frame", id); } catch (e) {}
+    frameSel.value = f ? id : "classic";
+    if (!f) {
+      tvEl.classList.remove("photo"); frameImg.hidden = true; frameImg.removeAttribute("src");
+      stage.style.aspectRatio = ""; bezel.style.cssText = ""; frameCredit.textContent = "";
+      return;
+    }
+    tvEl.classList.add("photo");
+    stage.style.aspectRatio = String(f.aspect);
+    const o = 0.6; // overscan so the picture tucks under the bezel's rounded corners
+    const sc = f.screen;
+    bezel.style.cssText = `left:${sc.left - o}%;top:${sc.top - o}%;width:${sc.width + 2 * o}%;height:${sc.height + 2 * o}%;`;
+    frameImg.src = f.src; frameImg.hidden = false;
+    const c = f.credit;
+    frameCredit.innerHTML = ` TV set: <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)}</a> by ${esc(c.artist)}` +
+      (c.license_url ? `, <a href="${esc(c.license_url)}" target="_blank" rel="noopener">${esc(c.license)}</a>` : `, ${esc(c.license)}`) + ", via Wikimedia Commons.";
+  }
+  function cycleFrame(dir = 1) {
+    const ids = ["classic", ...frames.map((f) => f.id)];
+    const i = ids.indexOf(frameSel.value);
+    applyFrame(ids[(i + dir + ids.length) % ids.length]);
+  }
+  frameSel.addEventListener("change", () => applyFrame(frameSel.value));
+  fetch("frames/frames.json").then((r) => r.json()).then((list) => {
+    frames = list;
+    for (const f of frames) { const op = document.createElement("option"); op.value = f.id; op.textContent = f.name; frameSel.appendChild(op); }
+    let saved = "classic";
+    try { saved = localStorage.getItem("retrotv.frame") || "classic"; } catch (e) {}
+    const q = new URLSearchParams(location.search).get("tv");
+    applyFrame(q || saved);
+  }).catch(() => {});
 
   /* ---------- boot ---------- */
   fetch("channels.json").then((r) => r.json()).then((d) => {

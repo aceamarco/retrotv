@@ -1,0 +1,116 @@
+[
+ {
+  "id": "1950s",
+  "name": "1958 Philco Predicta",
+  "src": "frames/1950s.png",
+  "aspect": 1.078,
+  "screen": {
+   "left": 12.78,
+   "top": 9.58,
+   "width": 56.89,
+   "height": 43.36
+  },
+  "credit": {
+   "title": "Predicta model television 1958-59 DMA",
+   "artist": "Photo: User:FA2010",
+   "license": "Public domain",
+   "license_url": null,
+   "url": "https://commons.wikimedia.org/wiki/File:Predicta_model_television_1958-59_DMA.jpg"
+  }
+ },
+ {
+  "id": "1960s",
+  "name": "1960s Setron console",
+  "src": "frames/1960s.png",
+  "aspect": 2.353,
+  "screen": {
+   "left": 25.91,
+   "top": 20.7,
+   "width": 35.92,
+   "height": 65.23
+  },
+  "credit": {
+   "title": "Setron television set, National Museum of Singapore (134456)",
+   "artist": "Moheen Reeyad",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Setron_television_set,_National_Museum_of_Singapore_(134456).jpg"
+  }
+ },
+ {
+  "id": "1970s",
+  "name": "1970s space-age portable",
+  "src": "frames/1970s.png",
+  "aspect": 0.6863,
+  "screen": {
+   "left": 35.48,
+   "top": 48.32,
+   "width": 56.89,
+   "height": 44.65
+  },
+  "credit": {
+   "title": "Televiseur vintage 70's blanc look space age",
+   "artist": "Johan Schul\u00e9",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Televiseur_vintage_70%27s_blanc_look_space_age.jpg"
+  }
+ },
+ {
+  "id": "1980s",
+  "name": "1980s Sanyo wood-grain",
+  "src": "frames/1980s.png",
+  "aspect": 1.4754,
+  "screen": {
+   "left": 8.97,
+   "top": 12.32,
+   "width": 64.96,
+   "height": 76.68
+  },
+  "credit": {
+   "title": "Television - Flickr - videocrab",
+   "artist": "Kelly Marine from Goleta, USA",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Television_-_Flickr_-_videocrab.jpg"
+  }
+ },
+ {
+  "id": "1990s",
+  "name": "1995 Loewe Planus",
+  "src": "frames/1990s.png",
+  "aspect": 1.4314,
+  "screen": {
+   "left": 16.4,
+   "top": 9.84,
+   "width": 68.23,
+   "height": 74.95
+  },
+  "credit": {
+   "title": "Loewe Planus CRT TV, 1995, front",
+   "artist": "Morn",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Loewe_Planus_CRT_TV,_1995,_front.jpg"
+  }
+ },
+ {
+  "id": "2000s",
+  "name": "2000s Sony FD Trinitron",
+  "src": "frames/2000s.png",
+  "aspect": 1.376,
+  "screen": {
+   "left": 16.84,
+   "top": 12.64,
+   "width": 66.35,
+   "height": 68.82
+  },
+  "credit": {
+   "title": "Sony FD Trinitron KV-20FV300",
+   "artist": "DrNegative",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Sony_FD_Trinitron_KV-20FV300.jpg"
+  }
+ }
+]

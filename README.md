@@ -48,7 +48,18 @@ The build script asks the archive.org metadata API for each item, keeps one
 browser-safe h.264 MP4 per video (preferring the archive's own `.ia.mp4`
 derivatives, skipping HEVC originals), and writes `channels.json`.
 
+## TV sets
+
+The picker in the control panel (or the T key) swaps the CSS cabinet for a
+real television cut out of a freely licensed Wikimedia Commons photo, one per
+decade from the 1950s to the 2000s. `frames/frames.json` lists each set's
+image, aspect ratio, screen rectangle (percent of the image) and photo
+credit; the credit is shown in the page footer as the licenses require.
+`?tv=1980s` deep-links a set. To add one, cut a transparent hole where the
+screen is, drop the PNG in `frames/`, and add an entry.
+
 ## Controls
 
 Up/Down: channel · Left/Right: volume · digits: direct tune · M: mute ·
-F: fullscreen · G: guide · P: power · click the screen: next channel.
+F: fullscreen · G: guide · P: power · T: next TV set (Shift+T previous) ·
+click the screen: next channel.

@@ -10,7 +10,8 @@
 <body>
 <main class="room">
   <section class="tv" id="tv">
-    <div class="bezel">
+    <div class="stage" id="stage">
+    <div class="bezel" id="bezel">
       <div class="screen" id="screen">
         <video id="video" playsinline preload="auto"></video>
         <canvas id="static" class="static"></canvas>
@@ -27,6 +28,8 @@
         </div>
       </div>
     </div>
+    <img class="frame-img" id="frameImg" alt="" hidden>
+    </div>
     <div class="panel">
       <div class="brand">RETROVISION <span>solid state</span></div>
       <div class="controls">
@@ -37,6 +40,7 @@
         <button data-act="mute" id="muteBtn" title="Mute">MUTE</button>
         <button data-act="guide" title="Channel guide">GUIDE</button>
         <button data-act="full" title="Fullscreen">FULL</button>
+        <select id="frameSel" title="TV set style (T to cycle)" aria-label="TV set style"><option value="classic">Classic cabinet</option></select>
         <button data-act="power" title="Power" class="power">⏻</button>
       </div>
     </div>
@@ -61,6 +65,7 @@
   </aside>
   <footer class="credit">
     Inspired by <a href="https://www.myretrotvs.com/" target="_blank" rel="noopener">My Retro TVs</a> by Joey Cato. Video streams from the <a href="https://archive.org" target="_blank" rel="noopener">Internet Archive</a>.
+    <span id="frameCredit"></span>
   </footer>
 </main>
 <script src="app.js"></script>
