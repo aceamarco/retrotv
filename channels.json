@@ -4492,7 +4492,7 @@
 "ordered": false
 },
 {
-"name": "Test Pattern",
+"name": "The 1950s",
 "videos": [
 {
 "url": "https://archive.org/download/Dragnet1951/Dragnet/Season%201/Dragnet%20%281951%29%20-%20S01E01%20-%20The%20Human%20Bomb.mp4",
@@ -5397,7 +5397,7 @@
 ],
 "hours": 64.2,
 "number": 5,
-"tagline": "The 1950s: Dragnet, The Lone Ranger, Sherlock Holmes, the Twilight Zone pilot, live variety",
+"tagline": "Dragnet, The Lone Ranger, Sherlock Holmes, the Twilight Zone pilot, live variety",
 "era": "1950s",
 "group": "Decades",
 "color": "#d8d0c0",
@@ -5408,7 +5408,7 @@
 "ordered": false
 },
 {
-"name": "Rabbit Ears",
+"name": "The 1960s",
 "videos": [
 {
 "url": "https://archive.org/download/The_Beverly_Hillbillies/Getting_Settled.mp4",
@@ -6847,7 +6847,7 @@
 ],
 "hours": 118.5,
 "number": 6,
-"tagline": "The 1960s: Beverly Hillbillies, Bonanza, Mister Ed, Get Smart, The Prisoner, Burke's Law, The Jetsons",
+"tagline": "Beverly Hillbillies, Bonanza, Mister Ed, Get Smart, The Prisoner, Burke's Law, The Jetsons",
 "era": "1960s",
 "group": "Decades",
 "color": "#7fe0a0",
@@ -6858,7 +6858,7 @@
 "ordered": false
 },
 {
-"name": "Shag Carpet",
+"name": "The 1970s",
 "videos": [
 {
 "url": "https://archive.org/download/wkrp-s-1-e-20-young-master-carlson/WKRP%20S1E01%20Pilot%20Pt%201.mp4",
@@ -7547,7 +7547,7 @@
 ],
 "hours": 53.0,
 "number": 7,
-"tagline": "The 1970s: WKRP, Taxi, Are You Being Served, Saturday-morning cartoons",
+"tagline": "WKRP, Taxi, Are You Being Served, Saturday-morning cartoons",
 "era": "1970s",
 "group": "Decades",
 "color": "#e8a03a",
@@ -7558,7 +7558,7 @@
 "ordered": false
 },
 {
-"name": "Tracking",
+"name": "The 1980s",
 "videos": [
 {
 "url": "https://archive.org/download/hill.-street.-blues.-s-01/Hill.Street.Blues.S01E01.Hill.Street.Station.Pilot.mp4",
@@ -8859,7 +8859,7 @@
 ],
 "hours": 99.0,
 "number": 8,
-"tagline": "The 1980s: Hill Street Blues, Street Hawk, Hey Dude, Saved by the Bell",
+"tagline": "Hill Street Blues, Street Hawk, Hey Dude, Saved by the Bell",
 "era": "1980s",
 "group": "Decades",
 "color": "#ff5f5f",
@@ -8870,7 +8870,7 @@
 "ordered": false
 },
 {
-"name": "Dial-Up",
+"name": "The 1990s",
 "videos": [
 {
 "url": "https://archive.org/download/familymatters_202507/season%201/Family%20Matters%20-%201x01%20-%20Pilot%20The%20Mama%20Who%20Came%20to%20Dinner.mp4",
@@ -12085,7 +12085,7 @@
 ],
 "hours": 209.1,
 "number": 9,
-"tagline": "The 1990s: Family Matters, NewsRadio, Wishbone, KaBlam!, Alex Mack, Keeping Up Appearances",
+"tagline": "Family Matters, NewsRadio, Wishbone, KaBlam!, Alex Mack, Keeping Up Appearances",
 "era": "1990s",
 "group": "Decades",
 "color": "#a07fff",

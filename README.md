@@ -33,11 +33,11 @@ in the guide and the on-screen channel display.
 | 2 | Laugh Track | 2000s live-action tween sitcoms |
 | 3 | Ink & Paint | 2000s cartoons |
 | 4 | Latchkey | 1990s weekday-afternoon cartoons |
-| 5 | Test Pattern | The 1950s |
-| 6 | Rabbit Ears | The 1960s |
-| 7 | Shag Carpet | The 1970s |
-| 8 | Tracking | The 1980s |
-| 9 | Dial-Up | The 1990s |
+| 5 | The 1950s | The 1950s |
+| 6 | The 1960s | The 1960s |
+| 7 | The 1970s | The 1970s |
+| 8 | The 1980s | The 1980s |
+| 9 | The 1990s | The 1990s |
 | 10 | Cereal Bowl | 1980s Saturday mornings, off-air with original commercials |
 | 11 | Sugar Rush | 1990s Saturday mornings, off-air with original commercials |
 | 12 | Tape Deck | 2000-2005 after-school action blocks, off-air |
