@@ -8,7 +8,11 @@ Every channel has a deterministic schedule derived from the wall clock, so
 tuning in drops you mid-episode or mid-commercial, and everyone watching the
 same channel sees the same thing.
 
-## Run it
+Live at **https://aceamarco.github.io/retrotv/** (GitHub Pages, deployed from
+the `main` branch root; every push to `main` redeploys). Deep-link a channel
+with `?ch=21`.
+
+## Run it locally
 
 ```sh
 python3 -m http.server 8080      # any static server works
