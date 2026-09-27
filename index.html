@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retro TV</title>
+<meta name="description" content="A simulated linear TV that plays full-length episodes and commercial breaks streamed from the Internet Archive.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="room">
+  <section class="tv" id="tv">
+    <div class="bezel">
+      <div class="screen" id="screen">
+        <video id="video" playsinline preload="auto"></video>
+        <canvas id="static" class="static"></canvas>
+        <div class="glass"></div>
+        <div class="osd" id="osd"><span id="osdText">--</span></div>
+        <div class="vol-osd" id="volOsd"><span>VOL</span><div class="bar"><i id="volBar"></i></div></div>
+        <div class="boot" id="boot">
+          <div class="boot-inner">
+            <h1>RETRO TV</h1>
+            <p>Full episodes and commercial breaks, streamed from the Internet Archive.</p>
+            <button id="powerBtn" class="big">Turn on</button>
+            <p class="hint">Keys: ↑ ↓ channel · ← → volume · 0-9 direct tune · M mute · F fullscreen · G guide</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="brand">RETROVISION <span>solid state</span></div>
+      <div class="controls">
+        <button data-act="chdown" title="Channel down">CH −</button>
+        <button data-act="chup" title="Channel up">CH +</button>
+        <button data-act="voldown" title="Volume down">VOL −</button>
+        <button data-act="volup" title="Volume up">VOL +</button>
+        <button data-act="mute" id="muteBtn" title="Mute">MUTE</button>
+        <button data-act="guide" title="Channel guide">GUIDE</button>
+        <button data-act="full" title="Fullscreen">FULL</button>
+        <button data-act="power" title="Power" class="power">⏻</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="info" id="info" hidden>
+    <div class="now">
+      <div class="label">NOW ON <b id="infoCh"></b></div>
+      <div class="title" id="infoTitle"></div>
+      <div class="meta" id="infoMeta"></div>
+    </div>
+    <div class="next">
+      <div class="label">UP NEXT</div>
+      <div class="title small" id="infoNext"></div>
+    </div>
+  </section>
+
+  <aside class="guide" id="guide" hidden>
+    <header><span>CHANNEL GUIDE</span><button id="guideClose">✕</button></header>
+    <ul id="guideList"></ul>
+    <footer>Everything streams straight from <a href="https://archive.org" target="_blank" rel="noopener">archive.org</a>. Playlists are built by <code>build_channels.py</code>.</footer>
+  </aside>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+:root {
+  --wood: #5a3a22; --wood-dark: #3b2414; --wood-light: #8a5a35;
+  --panel: #1c1a17; --panel-text: #d9c9a8;
+  --osd: #7dff7a; --bg: #0b0a0c; --text: #e8e2d6; --muted: #9a927f;
+  --accent: #ffb547;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: radial-gradient(ellipse at 50% 20%, #1e1b20 0%, var(--bg) 70%);
+  color: var(--text);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 24px 16px 48px;
+}
+.room { max-width: 1040px; margin: 0 auto; display: grid; gap: 22px; }
+
+/* --- TV cabinet --- */
+.tv {
+  background: linear-gradient(180deg, var(--wood-light), var(--wood) 30%, var(--wood-dark));
+  border-radius: 22px;
+  padding: 26px 26px 14px;
+  box-shadow: 0 40px 80px rgba(0,0,0,.7), inset 0 2px 0 rgba(255,255,255,.12), inset 0 -3px 0 rgba(0,0,0,.5);
+}
+.bezel {
+  background: #141311; border-radius: 26px; padding: 18px;
+  box-shadow: inset 0 0 0 2px #2a2724, inset 0 12px 30px rgba(0,0,0,.9);
+}
+.screen {
+  position: relative; aspect-ratio: 4 / 3; background: #000;
+  border-radius: 6% / 8%; overflow: hidden;
+  box-shadow: inset 0 0 60px rgba(0,0,0,.9), 0 0 0 1px #000;
+}
+.screen video, .screen canvas, .screen .glass, .screen .boot {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+}
+.screen video { object-fit: contain; background: #000; }
+.screen video.fill { object-fit: cover; }
+.static { opacity: 0; transition: opacity .12s; pointer-events: none; image-rendering: pixelated; }
+.static.on { opacity: 1; }
+.glass {
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%);
+}
+.glass::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(115deg, rgba(255,255,255,.08) 0%, transparent 35%);
+}
+.osd, .vol-osd {
+  position: absolute; z-index: 5; color: var(--osd);
+  font: 700 clamp(22px, 5vw, 48px)/1 "Courier New", monospace;
+  text-shadow: 0 0 6px rgba(125,255,122,.9), 2px 2px 0 rgba(0,0,0,.6);
+  opacity: 0; transition: opacity .4s; pointer-events: none;
+}
+.osd { top: 6%; right: 8%; }
+.osd.show, .vol-osd.show { opacity: 1; }
+.vol-osd { left: 8%; bottom: 8%; display: flex; align-items: center; gap: 12px; font-size: clamp(14px, 2.4vw, 22px); }
+.vol-osd .bar { width: 40vw; max-width: 260px; height: 14px; border: 2px solid var(--osd); }
+.vol-osd .bar i { display: block; height: 100%; background: var(--osd); width: 60%; }
+
+.boot {
+  display: grid; place-items: center; text-align: center; z-index: 6;
+  background: radial-gradient(ellipse at center, #10221a 0%, #000 75%); color: var(--osd);
+  font-family: "Courier New", monospace;
+}
+.boot[hidden] { display: none; }
+.boot h1 { font-size: clamp(28px, 6vw, 56px); letter-spacing: .3em; margin: 0 0 8px; }
+.boot p { margin: 4px 0 18px; padding: 0 12%; color: #b7ffb5; }
+.boot .hint { font-size: 12px; color: #6fae6d; margin-top: 18px; }
+button.big {
+  font: 700 18px "Courier New", monospace; letter-spacing: .15em; text-transform: uppercase;
+  background: var(--osd); color: #052; border: 0; border-radius: 6px; padding: 14px 32px; cursor: pointer;
+}
+button.big:hover { filter: brightness(1.1); }
+
+.panel { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 6px 2px; flex-wrap: wrap; }
+.brand { color: var(--panel-text); font: 700 15px/1 Georgia, serif; letter-spacing: .25em; }
+.brand span { display: block; font: italic 11px Georgia, serif; letter-spacing: .1em; color: #a88f66; margin-top: 4px; }
+.controls { display: flex; gap: 6px; flex-wrap: wrap; }
+.controls button {
+  min-width: 52px; min-height: 40px; padding: 0 10px;
+  background: linear-gradient(180deg, #33302b, #1a1815); color: var(--panel-text);
+  border: 1px solid #0a0908; border-radius: 6px; font: 700 12px/1 "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: .06em; cursor: pointer; box-shadow: 0 2px 0 #000, inset 0 1px 0 rgba(255,255,255,.08);
+}
+.controls button:active { transform: translateY(1px); box-shadow: 0 1px 0 #000; }
+.controls button.on { color: var(--accent); box-shadow: 0 0 10px rgba(255,181,71,.4), 0 2px 0 #000; }
+.controls button.power { color: #ff6a5a; font-size: 16px; }
+
+/* --- Info strip --- */
+.info { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+.info[hidden] { display: none; }
+.info > div { background: #15131a; border: 1px solid #2a2633; border-radius: 12px; padding: 14px 16px; min-width: 0; }
+.label { font-size: 11px; letter-spacing: .2em; color: var(--muted); margin-bottom: 6px; }
+.label b { color: var(--accent); }
+.title { font-size: 18px; font-weight: 700; overflow-wrap: anywhere; }
+.title.small { font-size: 14px; font-weight: 500; color: #cfc6b5; }
+.meta { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.meta a { color: var(--muted); }
+
+/* --- Guide --- */
+.guide {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(380px, 100vw); z-index: 50;
+  background: #100f14; border-left: 1px solid #2a2633; box-shadow: -20px 0 60px rgba(0,0,0,.6);
+  display: flex; flex-direction: column;
+}
+.guide[hidden] { display: none; }
+.guide header { display: flex; justify-content: space-between; align-items: center; padding: 16px; letter-spacing: .2em; font-size: 12px; color: var(--muted); border-bottom: 1px solid #2a2633; }
+.guide header button { background: none; border: 0; color: var(--text); font-size: 18px; cursor: pointer; min-width: 40px; min-height: 40px; }
+.guide ul { list-style: none; margin: 0; padding: 8px; overflow: auto; flex: 1; }
+.guide li button {
+  width: 100%; text-align: left; background: none; border: 0; color: var(--text); cursor: pointer;
+  display: grid; grid-template-columns: 44px 1fr; gap: 10px; padding: 10px 8px; border-radius: 8px; font: inherit;
+}
+.guide li button:hover, .guide li button.current { background: #1e1b26; }
+.guide li button.current .num { color: var(--accent); }
+.guide .num { font: 700 20px "Courier New", monospace; color: var(--muted); }
+.guide .nm { font-weight: 700; }
+.guide .tg { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.guide footer { padding: 12px 16px; font-size: 12px; color: var(--muted); border-top: 1px solid #2a2633; }
+.guide footer a { color: var(--accent); }
+.guide footer code { font-size: 11px; }
+
+@media (max-width: 640px) {
+  body { padding: 12px 16px 32px; }
+  .tv { padding: 14px 12px 8px; border-radius: 16px; }
+  .bezel { padding: 10px; border-radius: 16px; }
+  .info { grid-template-columns: 1fr; }
+  .brand { display: none; }
+  .controls { width: 100%; justify-content: space-between; }
+  .controls button { min-width: 0; flex: 1; padding: 0 4px; }
+}
+@media (prefers-reduced-motion: reduce) { .static, .osd, .vol-osd { transition: none; } }
