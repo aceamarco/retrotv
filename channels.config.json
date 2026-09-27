@@ -1,182 +1,47 @@
 {
- "_comment": "Each channel lists archive.org item identifiers. 'match' is an optional case-insensitive regex applied to file names inside the item. Channels of kind 'ads' feed the commercial breaks and are not tuneable.",
+ "_comment": "Each channel lists archive.org item identifiers. 'match' is an optional case-insensitive regex applied to file names inside the item. Channels are themed brands (like satellite-radio stations), not networks or single shows; 'group' sections the guide and 'color' is the brand color. Channels of kind 'ads' feed the commercial breaks and are not tuneable.",
  "channels": [
   {
    "number": 2,
-   "name": "Kids TV Mix",
-   "tagline": "Everything shuffled: Disney Channel 2003-2008, Catscratch, ¡Mucha Lucha!, Yu-Gi-Oh!",
+   "name": "Laugh Track",
+   "tagline": "Live-action tween sitcoms of the 2000s: hotel twins, psychic teens, secret pop stars, wizards and time travelers",
+   "group": "Kids & Toons",
+   "color": "#ff5fa2",
+   "era": "2000s",
    "sources": [
     {
-     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston"
+     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
+     "match": "^(The Suite Life|That's So Raven|Hannah\\.Montana|Lizzie McGuire|Even Stevens|Wizards of Waverly)"
     },
     {
-     "item": "catscratch-s-01-e-02-a-unicorn-club"
+     "item": "phil-of-the-future"
     },
     {
-     "item": "mucha-lucha-2002-the-complete-series",
-     "match": "^Mucha Lucha"
+     "item": "good-luck-charlie-2010-s-01-e-05"
     },
     {
-     "item": "yu-gi-oh-1x-39-yugi-vs-pegasus-match-of-the-millennium-part-5_202502"
+     "item": "sonny-with-a-chance_2008"
     }
    ],
-   "era": "2000s",
    "ads": [
-    "Disney Channel ads",
+    "2000s tween network ads",
     "2000s kids ads"
    ]
   },
   {
    "number": 3,
-   "name": "Suite Life",
-   "tagline": "The Suite Life of Zack & Cody",
+   "name": "Ink & Paint",
+   "tagline": "Cartoons of the 2000s: teen spies, proud families, llama emperors, dragons, aliens, recess and luchadores",
+   "group": "Kids & Toons",
+   "color": "#ffb547",
+   "era": "2000s",
    "sources": [
     {
      "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
-     "match": "^The Suite Life"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 4,
-   "name": "That's So Raven",
-   "tagline": "Seasons 1-3",
-   "sources": [
+     "match": "^(Kim Possible|The Proud Family|American Dragon|Lilo & Stitch|Recess|The\\.New\\.Adventures\\.of\\.Winnie)"
+    },
     {
-     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
-     "match": "^That's So Raven"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 5,
-   "name": "Hannah Montana",
-   "tagline": "Seasons 1-2",
-   "sources": [
-    {
-     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
-     "match": "^Hannah\\.Montana"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 6,
-   "name": "Kim Possible",
-   "tagline": "Seasons 1-2",
-   "sources": [
-    {
-     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
-     "match": "^Kim Possible"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 7,
-   "name": "Lizzie McGuire",
-   "tagline": "Season 1",
-   "sources": [
-    {
-     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
-     "match": "^Lizzie McGuire"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 8,
-   "name": "Even Stevens",
-   "tagline": "Season 1",
-   "sources": [
-    {
-     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
-     "match": "^Even Stevens"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 9,
-   "name": "Phil of the Future",
-   "tagline": "Seasons 1-2",
-   "sources": [
-    {
-     "item": "phil-of-the-future"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 10,
-   "name": "The Proud Family",
-   "tagline": "Full series",
-   "sources": [
-    {
-     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
-     "match": "^The Proud Family"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 11,
-   "name": "Wizards of Waverly Place",
-   "tagline": "Seasons 1-2",
-   "sources": [
-    {
-     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
-     "match": "^Wizards of Waverly"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 12,
-   "name": "Cartoon Mix",
-   "tagline": "American Dragon, Lilo & Stitch, Recess, Winnie the Pooh, Catscratch, ¡Mucha Lucha!",
-   "sources": [
-    {
-     "item": "the-suite-life-of-zack-cody-s-01-e-09-band-in-boston",
-     "match": "^(American Dragon|Lilo & Stitch|Recess|The\\.New\\.Adventures\\.of\\.Winnie)"
+     "item": "the-emperors-new-school"
     },
     {
      "item": "catscratch-s-01-e-02-a-unicorn-club"
@@ -186,136 +51,40 @@
      "match": "^Mucha Lucha"
     }
    ],
-   "era": "2000s",
    "ads": [
-    "Disney Channel ads",
+    "2000s tween network ads",
     "2000s kids ads"
    ]
   },
   {
-   "number": 13,
-   "name": "Good Luck Charlie",
-   "tagline": "2010",
+   "number": 4,
+   "name": "Latchkey",
+   "tagline": "Weekday-afternoon cartoons of the 1990s: stone gargoyles, cargo pilots and the syndicated toon block",
+   "group": "Kids & Toons",
+   "color": "#5fd0ff",
+   "era": "1990s",
    "sources": [
     {
-     "item": "good-luck-charlie-2010-s-01-e-05"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 14,
-   "name": "Sonny With a Chance",
-   "tagline": "2008",
-   "sources": [
+     "item": "gargoyles_202212"
+    },
     {
-     "item": "sonny-with-a-chance_2008"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 15,
-   "name": "Emperor's New School",
-   "tagline": "Season 1",
-   "sources": [
-    {
-     "item": "the-emperors-new-school"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 16,
-   "name": "90s Toon Block",
-   "tagline": "Disney Afternoon era cartoons",
-   "sources": [
+     "item": "tale-spin-1990"
+    },
     {
      "item": "disneychannel90stoonblock"
     }
    ],
-   "era": "1990s",
    "ads": [
     "1990s ads"
    ]
   },
   {
-   "number": 17,
-   "name": "Gargoyles",
-   "tagline": "1994",
-   "sources": [
-    {
-     "item": "gargoyles_202212"
-    }
-   ],
-   "era": "1990s",
-   "ads": [
-    "1990s ads"
-   ]
-  },
-  {
-   "number": 18,
-   "name": "TaleSpin",
-   "tagline": "1990",
-   "sources": [
-    {
-     "item": "tale-spin-1990"
-    }
-   ],
-   "era": "1990s",
-   "ads": [
-    "1990s ads"
-   ]
-  },
-  {
-   "number": 19,
-   "name": "The Jetsons",
-   "tagline": "Classic",
-   "sources": [
-    {
-     "item": "the.-jetsons"
-    }
-   ],
-   "era": "1960s",
-   "ads": [
-    "1960s ads"
-   ]
-  },
-  {
-   "number": 20,
-   "name": "Halloween Throwback",
-   "tagline": "Disney Channel Halloween 2000s mock block",
-   "sources": [
-    {
-     "item": "my-movie-70_202210"
-    }
-   ],
-   "era": "2000s",
-   "ads": [
-    "Disney Channel ads",
-    "2000s kids ads"
-   ]
-  },
-  {
-   "number": 21,
-   "name": "1950s TV",
+   "number": 5,
+   "name": "Test Pattern",
+   "tagline": "The 1950s: Dragnet, The Lone Ranger, Sherlock Holmes, the Twilight Zone pilot, live variety",
+   "group": "Decades",
+   "color": "#d8d0c0",
    "era": "1950s",
-   "tagline": "Dragnet, Lone Ranger, Sherlock Holmes, Twilight Zone, early Honeymooners",
-   "ads": [
-    "1950s ads"
-   ],
    "sources": [
     {
      "item": "Dragnet1951"
@@ -332,16 +101,18 @@
     {
      "item": "Cavalcade_Of_Stars"
     }
+   ],
+   "ads": [
+    "1950s ads"
    ]
   },
   {
-   "number": 22,
-   "name": "1960s TV",
+   "number": 6,
+   "name": "Rabbit Ears",
+   "tagline": "The 1960s: Beverly Hillbillies, Bonanza, Mister Ed, Get Smart, The Prisoner, Burke's Law, The Jetsons",
+   "group": "Decades",
+   "color": "#7fe0a0",
    "era": "1960s",
-   "tagline": "Beverly Hillbillies, Bonanza, Mister Ed, Get Smart, The Prisoner, Burke's Law",
-   "ads": [
-    "1960s ads"
-   ],
    "sources": [
     {
      "item": "The_Beverly_Hillbillies"
@@ -360,17 +131,22 @@
     },
     {
      "item": "BurkesLaw"
+    },
+    {
+     "item": "the.-jetsons"
     }
+   ],
+   "ads": [
+    "1960s ads"
    ]
   },
   {
-   "number": 23,
-   "name": "1970s TV",
+   "number": 7,
+   "name": "Shag Carpet",
+   "tagline": "The 1970s: WKRP, Taxi, Are You Being Served, Saturday-morning cartoons",
+   "group": "Decades",
+   "color": "#e8a03a",
    "era": "1970s",
-   "tagline": "WKRP, Taxi, Are You Being Served, 70s Saturday morning cartoons",
-   "ads": [
-    "1970s ads"
-   ],
    "sources": [
     {
      "item": "wkrp-s-1-e-20-young-master-carlson"
@@ -384,16 +160,18 @@
     {
      "item": "70s80sSaturdayMorningCartoons"
     }
+   ],
+   "ads": [
+    "1970s ads"
    ]
   },
   {
-   "number": 24,
-   "name": "1980s TV",
+   "number": 8,
+   "name": "Tracking",
+   "tagline": "The 1980s: Hill Street Blues, Street Hawk, Hey Dude, Saved by the Bell",
+   "group": "Decades",
+   "color": "#ff5f5f",
    "era": "1980s",
-   "tagline": "Hill Street Blues, Street Hawk, Hey Dude, Saved by the Bell, Tales from the Darkside",
-   "ads": [
-    "1980s ads"
-   ],
    "sources": [
     {
      "item": "hill.-street.-blues.-s-01"
@@ -406,18 +184,50 @@
     },
     {
      "item": "savedbythebell_202507"
-    },
-    {
-     "item": "tales-from-the-darkside-tv-recordings"
     }
+   ],
+   "ads": [
+    "1980s ads"
    ]
   },
   {
-   "number": 25,
-   "name": "80s Saturday Morning",
+   "number": 9,
+   "name": "Dial-Up",
+   "tagline": "The 1990s: Family Matters, NewsRadio, Wishbone, KaBlam!, Alex Mack, Keeping Up Appearances",
+   "group": "Decades",
+   "color": "#a07fff",
+   "era": "1990s",
+   "sources": [
+    {
+     "item": "familymatters_202507"
+    },
+    {
+     "item": "newsradio-1995-99"
+    },
+    {
+     "item": "wishbonefullseriesremastered"
+    },
+    {
+     "item": "KaBlam_201709"
+    },
+    {
+     "item": "secret-world-of-alex-mack"
+    },
+    {
+     "item": "keeping-up-appearances_202402"
+    }
+   ],
+   "ads": [
+    "1990s ads"
+   ]
+  },
+  {
+   "number": 10,
+   "name": "Cereal Bowl",
+   "tagline": "1980s Saturday mornings, straight off the VHS with the original commercials and holiday specials",
+   "group": "Off-Air Tapes",
+   "color": "#ffd75f",
    "era": "1980s",
-   "tagline": "Off-air VHS cartoon blocks with the original commercials",
-   "breaks": false,
    "sources": [
     {
      "item": "Houston-Saturday-Morning"
@@ -443,43 +253,16 @@
     {
      "item": "80s-christmas-specials-with-commercials-3"
     }
-   ]
-  },
-  {
-   "number": 26,
-   "name": "1990s TV",
-   "era": "1990s",
-   "tagline": "Family Matters, NewsRadio, Wishbone, KaBlam!, Alex Mack, Keeping Up Appearances",
-   "ads": [
-    "1990s ads"
    ],
-   "sources": [
-    {
-     "item": "familymatters_202507"
-    },
-    {
-     "item": "newsradio-1995-99"
-    },
-    {
-     "item": "wishbonefullseriesremastered"
-    },
-    {
-     "item": "KaBlam_201709"
-    },
-    {
-     "item": "secret-world-of-alex-mack"
-    },
-    {
-     "item": "keeping-up-appearances_202402"
-    }
-   ]
+   "breaks": false
   },
   {
-   "number": 27,
-   "name": "90s Saturday Morning",
+   "number": 11,
+   "name": "Sugar Rush",
+   "tagline": "1990s Saturday mornings: off-air network kids blocks and Land of the Lost, commercials intact",
+   "group": "Off-Air Tapes",
+   "color": "#ff8f3f",
    "era": "1990s",
-   "tagline": "Fox Kids 1995, 1996, 1998-99 and Land of the Lost, off-air with commercials",
-   "breaks": false,
    "sources": [
     {
      "item": "fox-kids-saturday-morning-cartoons-1995full-episodes-with-commercials"
@@ -493,15 +276,135 @@
     {
      "item": "LOTL90s"
     }
+   ],
+   "breaks": false
+  },
+  {
+   "number": 12,
+   "name": "Tape Deck",
+   "tagline": "After-school action blocks of 2000-2005 taped off the air: card duels, monsters, rangers and robots",
+   "group": "Off-Air Tapes",
+   "color": "#3fd0c0",
+   "era": "2000-2005",
+   "sources": [
+    {
+     "item": "ToonamiBroadcastOne"
+    },
+    {
+     "item": "kids-wb-cartoon-network-toonami-full-block-july-2001-woc-monster-rancher-batman-"
+    },
+    {
+     "item": "ToonamiDBZTenchiCardcaptor"
+    },
+    {
+     "item": "ToonamiTrappedInHyperspaceDays3and4"
+    },
+    {
+     "item": "foxkids-kids-wb-cartoon-network-2000-2003-power-rangers-yugioh-justice-league-dr"
+    },
+    {
+     "item": "kids-wb-saturday-morning-cartoons-july-2003-woc"
+    },
+    {
+     "item": "power-rangers-pokemon-megaman-yu-gi-oh-kids-wb-saturday-morning-cartoons-august-2003-woc"
+    },
+    {
+     "item": "Toonami-April-2004-vhs"
+    },
+    {
+     "item": "2005-kids-wb-20-yu-gi-oh-broadcast-with-commercials"
+    }
+   ],
+   "breaks": false
+  },
+  {
+   "number": 13,
+   "name": "Power Level",
+   "tagline": "Shonen action dubs of the 1990s and 2000s: card duels, digital monsters, mobile suits, super saiyans and a blue hedgehog",
+   "group": "Anime",
+   "color": "#ff7a1f",
+   "era": "1990s-2000s",
+   "sources": [
+    {
+     "item": "yu-gi-oh-1x-39-yugi-vs-pegasus-match-of-the-millennium-part-5_202502"
+    },
+    {
+     "item": "digimon-digital-monsters-the-complete-collection-saban-entertainment-edited-version"
+    },
+    {
+     "item": "20240812_20240812_2223"
+    },
+    {
+     "item": "15.-skirmish-in-the-sky_202207"
+    },
+    {
+     "item": "dragon-ball-z-133-148-toonami"
+    },
+    {
+     "item": "dragon-ball-z-150-165-toonami"
+    }
+   ],
+   "ads": [
+    "2000s action block ads",
+    "2000s kids ads"
    ]
   },
   {
-   "number": 28,
-   "name": "Sports",
-   "era": "1971-2008",
+   "number": 14,
+   "name": "Starlight",
+   "tagline": "Magical girls and space drifters: Sailor Moon, Cardcaptors, Tenchi Muyo, Outlaw Star",
+   "group": "Anime",
+   "color": "#e07fff",
+   "era": "1990s-2000s",
+   "sources": [
+    {
+     "item": "Sailor-Moon-Dic-Dub-English-DVD-H264"
+    },
+    {
+     "item": "cardcaptors-07-the-mysterious-painting"
+    },
+    {
+     "item": "tenchi-muyo-toonami-version"
+    },
+    {
+     "item": "outlawstartoonami"
+    }
+   ],
+   "ads": [
+    "2000s action block ads",
+    "2000s kids ads"
+   ]
+  },
+  {
+   "number": 15,
+   "name": "Graveyard Shift",
+   "tagline": "Things that go bump: Tales from the Darkside, the Twilight Zone pilot, and a 2000s Halloween block",
+   "group": "After Dark",
+   "color": "#8fff5f",
+   "era": "1959-2005",
+   "sources": [
+    {
+     "item": "tales-from-the-darkside-tv-recordings"
+    },
+    {
+     "item": "the-twilight-zone-1959-s-01-e-00-original-pilot"
+    },
+    {
+     "item": "my-movie-70_202210"
+    }
+   ],
+   "ads": [
+    "1980s ads",
+    "2000s tween network ads"
+   ]
+  },
+  {
+   "number": 16,
+   "name": "Cheap Seats",
    "tagline": "Monday Night Football, Super Bowls III/XX/XLII, NBA Finals, 1986 World Series, NHL, WWF, SportsCenter",
-   "breaks": false,
-   "ordered": true,
+   "group": "Real World",
+   "color": "#5fff9f",
+   "era": "1971-2008",
    "sources": [
     {
      "item": "washingtonredskinsvs.losangelesramsdecember131971pt.1"
@@ -566,14 +469,17 @@
     {
      "item": "dvd-transfer-86"
     }
-   ]
+   ],
+   "breaks": false,
+   "ordered": true
   },
   {
-   "number": 29,
-   "name": "News",
-   "era": "1979-2001",
+   "number": 17,
+   "name": "Eleven O'Clock",
    "tagline": "Local newscasts, network evening news, Dateline, 20/20, 48 Hours, off-air with commercials",
-   "breaks": false,
+   "group": "Real World",
+   "color": "#5fa0ff",
+   "era": "1979-2001",
    "sources": [
     {
      "item": "abc-1979-transfer"
@@ -632,89 +538,12 @@
     {
      "item": "vts-01-1_20230509_0734"
     }
-   ]
-  },
-  {
-   "number": 30,
-   "name": "Anime",
-   "era": "1990s-2000s",
-   "tagline": "Yu-Gi-Oh!, Digimon, Cardcaptors, Gundam Wing, Outlaw Star, Tenchi Muyo, Sailor Moon, Sonic X, DBZ",
-   "ads": [
-    "Toonami & Kids WB ads",
-    "2000s kids ads"
    ],
-   "sources": [
-    {
-     "item": "yu-gi-oh-1x-39-yugi-vs-pegasus-match-of-the-millennium-part-5_202502"
-    },
-    {
-     "item": "digimon-digital-monsters-the-complete-collection-saban-entertainment-edited-version"
-    },
-    {
-     "item": "cardcaptors-07-the-mysterious-painting"
-    },
-    {
-     "item": "20240812_20240812_2223"
-    },
-    {
-     "item": "outlawstartoonami"
-    },
-    {
-     "item": "tenchi-muyo-toonami-version"
-    },
-    {
-     "item": "Sailor-Moon-Dic-Dub-English-DVD-H264"
-    },
-    {
-     "item": "15.-skirmish-in-the-sky_202207"
-    },
-    {
-     "item": "dragon-ball-z-133-148-toonami"
-    },
-    {
-     "item": "dragon-ball-z-150-165-toonami"
-    }
-   ]
-  },
-  {
-   "number": 31,
-   "name": "Toonami / Kids WB",
-   "era": "2000-2005",
-   "tagline": "Off-air Toonami and Kids' WB blocks with the original commercials (Yu-Gi-Oh!, Pokémon, DBZ, Tenchi)",
-   "breaks": false,
-   "sources": [
-    {
-     "item": "ToonamiBroadcastOne"
-    },
-    {
-     "item": "kids-wb-cartoon-network-toonami-full-block-july-2001-woc-monster-rancher-batman-"
-    },
-    {
-     "item": "ToonamiDBZTenchiCardcaptor"
-    },
-    {
-     "item": "ToonamiTrappedInHyperspaceDays3and4"
-    },
-    {
-     "item": "foxkids-kids-wb-cartoon-network-2000-2003-power-rangers-yugioh-justice-league-dr"
-    },
-    {
-     "item": "kids-wb-saturday-morning-cartoons-july-2003-woc"
-    },
-    {
-     "item": "power-rangers-pokemon-megaman-yu-gi-oh-kids-wb-saturday-morning-cartoons-august-2003-woc"
-    },
-    {
-     "item": "Toonami-April-2004-vhs"
-    },
-    {
-     "item": "2005-kids-wb-20-yu-gi-oh-broadcast-with-commercials"
-    }
-   ]
+   "breaks": false
   },
   {
    "kind": "ads",
-   "name": "Disney Channel ads",
+   "name": "2000s tween network ads",
    "sources": [
     {
      "item": "disney-channel-2006-08-xx-commercials-bumps-the-cheetah-girls-2"
@@ -930,7 +759,7 @@
   },
   {
    "kind": "ads",
-   "name": "Toonami & Kids WB ads",
+   "name": "2000s action block ads",
    "sources": [
     {
      "item": "toonami-1997-03-17-toonami-premiere-commercials-bumps"

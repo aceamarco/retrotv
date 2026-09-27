@@ -124,6 +124,9 @@ for ch in cfg["channels"]:
         rec["number"] = ch["number"]
         rec["tagline"] = ch.get("tagline", "")
         rec["era"] = ch.get("era", "")
+        # group: section heading in the guide; color: the channel's brand color
+        rec["group"] = ch.get("group", "")
+        rec["color"] = ch.get("color", "")
         # ads: name of an ad pool (or list of names) to cut breaks from; default = all pools
         if ch.get("ads"): rec["ads"] = ch["ads"]
         # breaks: false when the recordings already contain their own commercials

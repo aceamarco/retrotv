@@ -196,7 +196,7 @@
     chIndex = ((idx % channels.length) + channels.length) % channels.length;
     const ch = channels[chIndex];
     try { localStorage.setItem("retrotv.channel", String(ch.number)); } catch (e) {}
-    showOsd(String(ch.number).padStart(2, "0"));
+    showOsd(String(ch.number).padStart(2, "0"), ch);
     if (frameMode === "auto" && frames.length) showFrame(frameForChannel(ch));
     if (!opts.silent) showStatic(STATIC_MS);
     sync();
@@ -204,8 +204,11 @@
   }
 
   /* ---------- UI ---------- */
-  function showOsd(text) {
-    osdText.textContent = text; osd.classList.add("show");
+  function showOsd(text, ch) {
+    osdText.textContent = text;
+    $("osdName").textContent = ch ? ch.name : "";
+    osd.style.setProperty("--brand", (ch && ch.color) || "var(--osd)");
+    osd.classList.add("show");
     clearTimeout(osdTimer); osdTimer = setTimeout(() => osd.classList.remove("show"), 2600);
   }
   function showVol() {
@@ -217,6 +220,8 @@
   function renderInfo() {
     const ch = channels[chIndex];
     $("infoCh").textContent = ch.number + " · " + ch.name;
+    $("infoCh").style.color = ch.color || "";
+    document.querySelector(".info .now").style.borderColor = ch.color || "";
     if (slot.type === "ad") {
       $("infoTitle").textContent = "Commercial break";
       $("infoMeta").innerHTML = `clip from <a href="https://archive.org/details/${slot.video.item}" target="_blank" rel="noopener">${esc(slot.video.title)}</a>`;
@@ -230,17 +235,25 @@
   function esc(s) { return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
   function renderGuide() {
     guideList.innerHTML = "";
+    let group = null;
     channels.forEach((ch, i) => {
+      if (ch.group && ch.group !== group) {
+        group = ch.group;
+        const h = document.createElement("li"); h.className = "grp"; h.textContent = group;
+        guideList.appendChild(h);
+      }
       const li = document.createElement("li");
       const b = document.createElement("button");
-      b.innerHTML = `<span class="num">${ch.number}</span><span><div class="nm">${esc(ch.name)}</div><div class="tg">${ch.era ? "<b>" + esc(ch.era) + "</b> · " : ""}${esc(ch.tagline || "")} · ${ch.videos.length} videos · ${ch.hours} h</div></span>`;
+      b.dataset.index = i;
+      b.style.setProperty("--brand", ch.color || "var(--accent)");
+      b.innerHTML = `<span class="num">${ch.number}</span><span><div class="nm">${esc(ch.name)}</div><div class="tg">${ch.era ? "<b>" + esc(ch.era) + "</b> · " : ""}${esc(ch.tagline || "")}</div><div class="ct">${ch.videos.length} videos · ${ch.hours} h</div></span>`;
       b.addEventListener("click", () => { powerOn(); tune(i); toggleGuide(false); });
       li.appendChild(b); guideList.appendChild(li);
     });
     renderGuideCurrent();
   }
   function renderGuideCurrent() {
-    [...guideList.querySelectorAll("button")].forEach((b, i) => b.classList.toggle("current", i === chIndex));
+    guideList.querySelectorAll("button").forEach((b) => b.classList.toggle("current", Number(b.dataset.index) === chIndex));
   }
   function toggleGuide(force) {
     const show = force === undefined ? guide.hidden : force;

@@ -10,7 +10,7 @@ same channel sees the same thing.
 
 Live at **https://aceamarco.github.io/retrotv/** (GitHub Pages, deployed from
 the `main` branch root; every push to `main` redeploys). Deep-link a channel
-with `?ch=21`.
+with `?ch=8`.
 
 ## Run it locally
 
@@ -24,20 +24,41 @@ Static files only. Deploy by copying `index.html`, `style.css`, `app.js` and
 
 ## Lineup
 
-Channels 2-20 are 2000s kids' TV (Disney Channel 2003-2008 shows, Catscratch,
-¡Mucha Lucha!, and more). Channels 21-27 are decade channels (1950s through
-1990s, plus off-air 80s and 90s Saturday-morning blocks). Channel 28 is
-sports (Monday Night Football, Super Bowls, NBA Finals, 1986 World Series,
-NHL, WWF, SportsCenter) and 29 is news (local newscasts, network evening
-news, Dateline, 20/20, 48 Hours). Each decade channel cuts its commercial
-breaks from an ad pool of the same decade.
+Channels are themed brands rather than networks or single shows, the way
+satellite radio names its music stations. Each has a brand color that shows
+in the guide and the on-screen channel display.
+
+| # | Brand | Theme |
+|---|---|---|
+| 2 | Laugh Track | 2000s live-action tween sitcoms |
+| 3 | Ink & Paint | 2000s cartoons |
+| 4 | Latchkey | 1990s weekday-afternoon cartoons |
+| 5 | Test Pattern | The 1950s |
+| 6 | Rabbit Ears | The 1960s |
+| 7 | Shag Carpet | The 1970s |
+| 8 | Tracking | The 1980s |
+| 9 | Dial-Up | The 1990s |
+| 10 | Cereal Bowl | 1980s Saturday mornings, off-air with original commercials |
+| 11 | Sugar Rush | 1990s Saturday mornings, off-air with original commercials |
+| 12 | Tape Deck | 2000-2005 after-school action blocks, off-air |
+| 13 | Power Level | Shonen action anime dubs |
+| 14 | Starlight | Magical-girl and space anime dubs |
+| 15 | Graveyard Shift | Anthology horror and Halloween blocks |
+| 16 | Cheap Seats | Classic games: NFL, NBA, MLB, NHL, wrestling |
+| 17 | Eleven O'Clock | Off-air local and network newscasts, newsmagazines |
+
+The decade channels sit on the matching dial position (the 1950s on 5, the
+1960s on 6, and so on) and cut their commercial breaks from an ad pool of
+the same decade. Off-air channels play the recordings straight through since
+the tapes already contain their commercials.
 
 ## Change the lineup
 
 1. Edit `channels.config.json`. A channel is a list of archive.org item
    identifiers, with an optional `match` regex on file names inside the item.
    Entries with `"kind": "ads"` are named ad pools. Channel options:
-   `era` (label), `ads` (pool name or list; default is every pool),
+   `era` (label), `group` (guide section), `color` (brand color),
+   `ads` (pool name or list; default is every pool),
    `breaks: false` (recording already contains its commercials, play it
    straight through), `ordered: true` (play files in name order, for
    multi-part games, instead of shuffling).

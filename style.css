@@ -53,7 +53,9 @@ body {
   text-shadow: 0 0 6px rgba(125,255,122,.9), 2px 2px 0 rgba(0,0,0,.6);
   opacity: 0; transition: opacity .4s; pointer-events: none;
 }
-.osd { top: 6%; right: 8%; }
+.osd { top: 6%; right: 8%; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.osd-name { font-size: .42em; letter-spacing: .14em; text-transform: uppercase; color: var(--brand, var(--osd)); text-shadow: 0 0 6px currentColor, 2px 2px 0 rgba(0,0,0,.6); }
+.osd-name:empty { display: none; }
 .osd.show, .vol-osd.show { opacity: 1; }
 .vol-osd { left: 8%; bottom: 8%; display: flex; align-items: center; gap: 12px; font-size: clamp(14px, 2.4vw, 22px); }
 .vol-osd .bar { width: 40vw; max-width: 260px; height: 14px; border: 2px solid var(--osd); }
@@ -131,9 +133,14 @@ button.big:hover { filter: brightness(1.1); }
 }
 .guide li button:hover, .guide li button.current { background: #1e1b26; }
 .guide li button.current .num { color: var(--accent); }
-.guide .num { font: 700 20px "Courier New", monospace; color: var(--muted); }
-.guide .nm { font-weight: 700; }
-.guide .tg { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.guide .grp { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); padding: 14px 8px 4px; }
+.guide .grp:first-child { padding-top: 4px; }
+.guide li button { border-left: 3px solid transparent; border-radius: 0 8px 8px 0; }
+.guide li button:hover, .guide li button.current { border-left-color: var(--brand); }
+.guide .num { font: 700 20px "Courier New", monospace; color: var(--brand); }
+.guide .nm { font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--brand); }
+.guide .tg { font-size: 12px; color: var(--text); margin-top: 2px; }
+.guide .ct { font-size: 11px; color: var(--muted); margin-top: 2px; }
 .guide footer { padding: 12px 16px; font-size: 12px; color: var(--muted); border-top: 1px solid #2a2633; }
 .guide footer a { color: var(--accent); }
 .guide footer code { font-size: 11px; }
