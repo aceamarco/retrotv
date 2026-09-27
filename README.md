@@ -51,12 +51,16 @@ derivatives, skipping HEVC originals), and writes `channels.json`.
 ## TV sets
 
 The picker in the control panel (or the T key) swaps the CSS cabinet for a
-real television cut out of a freely licensed Wikimedia Commons photo, one per
-decade from the 1950s to the 2000s. `frames/frames.json` lists each set's
-image, aspect ratio, screen rectangle (percent of the image) and photo
-credit; the credit is shown in the page footer as the licenses require.
-`?tv=1980s` deep-links a set. To add one, cut a transparent hole where the
-screen is, drop the PNG in `frames/`, and add an entry.
+television set image, one per decade from the 1950s to the 2000s. "Auto"
+switches the set to match the decade of whatever channel is tuned. The
+default is the classic CSS cabinet. `?tv=1980s` deep-links a set.
+
+The set images were generated with Gemini against a green backdrop with a
+flat magenta screen (see the prompts in the project history). To add or
+replace one, drop the image in `frames/src/<id>.jpeg` and run
+`python3 frames/build_frames.py`: it keys the backdrop, finds the screen,
+cuts a transparent hole, and rewrites `frames/frames.json` with each set's
+aspect ratio and screen rectangle.
 
 ## Controls
 

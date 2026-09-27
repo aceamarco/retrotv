@@ -197,6 +197,7 @@
     const ch = channels[chIndex];
     try { localStorage.setItem("retrotv.channel", String(ch.number)); } catch (e) {}
     showOsd(String(ch.number).padStart(2, "0"));
+    if (frameMode === "auto" && frames.length) showFrame(frameForChannel(ch));
     if (!opts.silent) showStatic(STATIC_MS);
     sync();
     renderGuideCurrent();
@@ -303,27 +304,49 @@
   /* ---------- TV set frames ---------- */
   let frames = [];
   const tvEl = $("tv"), stage = $("stage"), bezel = $("bezel"), frameImg = $("frameImg"), frameSel = $("frameSel"), frameCredit = $("frameCredit");
+  let frameMode = "classic";   // "auto" follows the channel's decade; otherwise a fixed frame id
+  function decadeOf(ch) {
+    // era strings look like "1950s", "1990s-2000s", "1971-2008": take the first year
+    const m = /(\d{4})/.exec(ch.era || "");
+    return m ? Math.floor(Number(m[1]) / 10) * 10 + "s" : null;
+  }
+  function frameForChannel(ch) {
+    const d = ch && decadeOf(ch);
+    if (d && frames.some((f) => f.id === d)) return d;
+    return "2000s";                             // sensible default for anything undated
+  }
   function applyFrame(id) {
-    const f = frames.find((x) => x.id === id);
+    if (id === "auto") {
+      frameMode = "auto";
+      try { localStorage.setItem("retrotv.frame", "auto"); } catch (e) {}
+      frameSel.value = "auto";
+      showFrame(channels.length ? frameForChannel(channels[chIndex]) : "classic");
+      return;
+    }
+    frameMode = id;
     try { localStorage.setItem("retrotv.frame", id); } catch (e) {}
-    frameSel.value = f ? id : "classic";
+    frameSel.value = frames.some((x) => x.id === id) ? id : "classic";
+    showFrame(id);
+  }
+  function showFrame(id) {
+    const f = frames.find((x) => x.id === id);
     if (!f) {
       tvEl.classList.remove("photo"); frameImg.hidden = true; frameImg.removeAttribute("src");
-      stage.style.aspectRatio = ""; bezel.style.cssText = ""; frameCredit.textContent = "";
+      stage.style.cssText = ""; bezel.style.cssText = ""; frameCredit.textContent = "";
       return;
     }
     tvEl.classList.add("photo");
     stage.style.aspectRatio = String(f.aspect);
+    stage.style.maxWidth = `calc(86vh * ${f.aspect})`;   // tall sets (antennas, pedestals) stay on screen
+    stage.style.margin = "0 auto";
     const o = 0.6; // overscan so the picture tucks under the bezel's rounded corners
     const sc = f.screen;
     bezel.style.cssText = `left:${sc.left - o}%;top:${sc.top - o}%;width:${sc.width + 2 * o}%;height:${sc.height + 2 * o}%;`;
     frameImg.src = f.src; frameImg.hidden = false;
-    const c = f.credit;
-    frameCredit.innerHTML = ` TV set: <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)}</a> by ${esc(c.artist)}` +
-      (c.license_url ? `, <a href="${esc(c.license_url)}" target="_blank" rel="noopener">${esc(c.license)}</a>` : `, ${esc(c.license)}`) + ", via Wikimedia Commons.";
+    frameCredit.textContent = " TV set image generated with Gemini.";
   }
   function cycleFrame(dir = 1) {
-    const ids = ["classic", ...frames.map((f) => f.id)];
+    const ids = ["auto", "classic", ...frames.map((f) => f.id)];
     const i = ids.indexOf(frameSel.value);
     applyFrame(ids[(i + dir + ids.length) % ids.length]);
   }
