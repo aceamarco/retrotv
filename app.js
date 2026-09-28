@@ -92,7 +92,7 @@
     const perEp = ch.breaks === false ? 0 : AD_BREAK_MIN + AD_BREAK_MAX;
     return ch.videos.reduce((s, v) => s + v.length, 0) + ch.videos.length * perEp;
   }
-  function currentSlot(ch, now) {
+  function locate(ch, now) {
     const elapsed = now - EPOCH;
     const nominal = nominalLength(ch);
     let idx = Math.floor(elapsed / nominal);
@@ -100,12 +100,31 @@
     let cycleStart = idx * nominal;
     let cyc = getCycle(ch, idx);
     while (elapsed >= cycleStart + cyc.length) { cycleStart += cyc.length; idx++; cyc = getCycle(ch, idx); }
-    const pos = elapsed - cycleStart;
+    return { idx, cycleStart, cyc, pos: elapsed - cycleStart };
+  }
+  function currentSlot(ch, now) {
+    const { idx, cyc, pos } = locate(ch, now);
     let i = cyc.slots.findIndex((s) => pos < s.at + s.dur);
     if (i < 0) i = cyc.slots.length - 1;
     const s = cyc.slots[i];
     const next = cyc.slots[i + 1] || getCycle(ch, idx + 1).slots[0];
     return { ...s, offset: pos - s.at, endsAt: now + (s.dur - (pos - s.at)), next };
+  }
+  // Programs (an episode plus the ad breaks glued to it) overlapping [from, to],
+  // with absolute start/end times. Used by the grid guide.
+  function programsBetween(ch, from, to) {
+    let { idx, cycleStart, cyc } = locate(ch, from);
+    const out = []; let cur = null;
+    for (let guard = 0; guard < 50; guard++) {
+      for (const s of cyc.slots) {
+        const at = EPOCH + cycleStart + s.at, end = at + s.dur;
+        if (at >= to) return out.filter((p) => p.end > from);
+        if (s.type === "show" && s.part !== 2) { cur = { video: s.video, start: at, end }; out.push(cur); }
+        else if (cur) cur.end = end;
+      }
+      cycleStart += cyc.length; idx++; cyc = getCycle(ch, idx);
+    }
+    return out.filter((p) => p.end > from);
   }
 
   /* ---------- static noise ---------- */
@@ -233,32 +252,101 @@
     $("infoNext").textContent = n ? (n.type === "ad" ? "Commercial break" : n.video.title + (n.part === 2 ? " (cont.)" : "")) + " · in " + fmt(slot.endsAt - Date.now() / 1000) : "";
   }
   function esc(s) { return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+  /* ---------- grid guide ----------
+     Rows are channels, columns are half hours. Blocks are positioned by wall
+     clock time, so what's on the grid is exactly what tuning in would play. */
+  const SLOT = 30 * 60;                                   // one column, seconds
+  let guideStart = null;                                  // window start (seconds), null = follow the clock
+  let guideTimer = null;
+  const guideCols = () => (window.innerWidth < 720 ? 3 : 4);
+  const floorHalf = (t) => Math.floor(t / SLOT) * SLOT;
+  const timeFmt = new Intl.DateTimeFormat([], { hour: "numeric", minute: "2-digit" });
+  const dateFmt = new Intl.DateTimeFormat([], { weekday: "short", month: "short", day: "numeric" });
+  function guideWindow() {
+    const now = Date.now() / 1000;
+    const start = guideStart === null ? floorHalf(now) : guideStart;
+    return { now, start, end: start + guideCols() * SLOT, len: guideCols() * SLOT };
+  }
   function renderGuide() {
+    const w = guideWindow();
+    // time bar
+    const times = $("guideTimes");
+    times.style.setProperty("--cols", guideCols());
+    times.innerHTML = `<div class="corner">${dateFmt.format(w.start * 1000)}</div>`;
+    for (let i = 0; i < guideCols(); i++) {
+      const d = document.createElement("div"); d.className = "tk";
+      d.textContent = timeFmt.format((w.start + i * SLOT) * 1000);
+      times.appendChild(d);
+    }
+    // rows
+    const line = $("guideNowLine");
     guideList.innerHTML = "";
     let group = null;
     channels.forEach((ch, i) => {
       if (ch.group && ch.group !== group) {
         group = ch.group;
-        const h = document.createElement("li"); h.className = "grp"; h.textContent = group;
+        const h = document.createElement("div"); h.className = "grp"; h.textContent = group;
         guideList.appendChild(h);
       }
-      const li = document.createElement("li");
-      const b = document.createElement("button");
-      b.dataset.index = i;
-      b.style.setProperty("--brand", ch.color || "var(--accent)");
-      b.innerHTML = `<span class="num">${ch.number}</span><span><div class="nm">${esc(ch.name)}</div><div class="tg">${ch.era ? "<b>" + esc(ch.era) + "</b> · " : ""}${esc(ch.tagline || "")}</div><div class="ct">${ch.videos.length} videos · ${ch.hours} h</div></span>`;
-      b.addEventListener("click", () => { powerOn(); tune(i); toggleGuide(false); });
-      li.appendChild(b); guideList.appendChild(li);
+      const row = document.createElement("div");
+      row.className = "row"; row.dataset.index = i;
+      row.style.setProperty("--brand", ch.color || "var(--accent)");
+      const chan = document.createElement("button");
+      chan.className = "chan"; chan.title = ch.tagline || ch.name;
+      chan.innerHTML = `<span class="num">${ch.number}</span><span class="nm">${esc(ch.name)}</span>`;
+      chan.addEventListener("click", () => { powerOn(); tune(i); toggleGuide(false); });
+      const lane = document.createElement("div"); lane.className = "lane";
+      for (const p of programsBetween(ch, w.start, w.end)) {
+        const b = document.createElement("button");
+        b.className = "prog";
+        const s = Math.max(p.start, w.start), e = Math.min(p.end, w.end);
+        b.style.left = ((s - w.start) / w.len * 100) + "%";
+        b.style.width = ((e - s) / w.len * 100) + "%";
+        if ((e - s) / w.len < 0.035) b.classList.add("tiny");   // too narrow for a label
+        if (p.start < w.start) b.classList.add("cl");
+        if (p.end > w.end) b.classList.add("cr");
+        if (w.now >= p.start && w.now < p.end) b.classList.add("live");
+        b.title = `${esc(p.video.title)}\n${timeFmt.format(p.start * 1000)} – ${timeFmt.format(p.end * 1000)}`;
+        b.innerHTML = `<span>${esc(p.video.title)}</span>`;
+        b.addEventListener("click", () => { powerOn(); tune(i); toggleGuide(false); });
+        lane.appendChild(b);
+      }
+      row.append(chan, lane);
+      guideList.appendChild(row);
     });
+    // now line (unitless fraction of the lane width)
+    const inWin = w.now >= w.start && w.now < w.end;
+    line.hidden = !inWin;
+    if (inWin) line.style.setProperty("--x", String((w.now - w.start) / w.len));
+    guideList.appendChild(line);
+    $("guideNow").classList.toggle("on", guideStart === null);
     renderGuideCurrent();
   }
   function renderGuideCurrent() {
-    guideList.querySelectorAll("button").forEach((b) => b.classList.toggle("current", Number(b.dataset.index) === chIndex));
+    guideList.querySelectorAll(".row").forEach((r) => r.classList.toggle("current", Number(r.dataset.index) === chIndex));
+  }
+  function shiftGuide(dir) {
+    const w = guideWindow();
+    guideStart = w.start + dir * SLOT;
+    if (guideStart === floorHalf(Date.now() / 1000)) guideStart = null;   // back on the live window
+    renderGuide();
   }
   function toggleGuide(force) {
     const show = force === undefined ? guide.hidden : force;
     guide.hidden = !show;
+    clearInterval(guideTimer); guideTimer = null;
+    if (show) {
+      guideStart = null;
+      renderGuide();
+      guideTimer = setInterval(renderGuide, 30000);
+      const cur = guideList.querySelector(".row.current");
+      if (cur) cur.scrollIntoView({ block: "center" });
+    }
   }
+  $("guidePrev").addEventListener("click", () => shiftGuide(-1));
+  $("guideNext").addEventListener("click", () => shiftGuide(1));
+  $("guideNow").addEventListener("click", () => { guideStart = null; renderGuide(); });
+  window.addEventListener("resize", () => { if (!guide.hidden) renderGuide(); });
 
   function powerOn() {
     if (on) return;
@@ -380,7 +468,6 @@
     d.ads.forEach((p) => { adPools[p.name] = p.videos; });
     allAds = d.ads.flatMap((p) => p.videos);
     video.volume = 0.6;
-    renderGuide();
     const want = Number(new URLSearchParams(location.search).get("ch"));
     if (want) {
       const i = channels.findIndex((c) => c.number === want);

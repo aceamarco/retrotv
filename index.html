@@ -59,8 +59,19 @@
   </section>
 
   <aside class="guide" id="guide" hidden>
-    <header><span>CHANNEL GUIDE</span><button id="guideClose">✕</button></header>
-    <ul id="guideList"></ul>
+    <header>
+      <span class="gtitle">GUIDE</span>
+      <div class="tnav">
+        <button id="guidePrev" title="Earlier">‹</button>
+        <button id="guideNow" title="Jump to now">NOW</button>
+        <button id="guideNext" title="Later">›</button>
+      </div>
+      <button id="guideClose" title="Close">✕</button>
+    </header>
+    <div class="gridwrap" id="guideWrap">
+      <div class="timebar" id="guideTimes"></div>
+      <div class="rows" id="guideList"><div class="nowline" id="guideNowLine" hidden></div></div>
+    </div>
     <footer>Everything streams straight from <a href="https://archive.org" target="_blank" rel="noopener">archive.org</a>. Playlists are built by <code>build_channels.py</code>.</footer>
   </aside>
   <footer class="credit">
