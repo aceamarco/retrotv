@@ -542,6 +542,98 @@
    "breaks": false
   },
   {
+   "number": 18,
+   "name": "Morphin Time",
+   "tagline": "Teenagers with attitude, 1993-2001: Mighty Morphin, Zeo, Turbo, In Space, Lost Galaxy, Lightspeed Rescue, Time Force",
+   "group": "Kids & Toons",
+   "color": "#ff3b3b",
+   "era": "1993-2001",
+   "sources": [
+    {
+     "item": "mighty-morphin-power-rangers-season-1"
+    },
+    {
+     "item": "mighty-morphin-power-rangers-season-2"
+    },
+    {
+     "item": "mighty-morphin-power-rangers-season-3"
+    },
+    {
+     "item": "power-rangers-zeo"
+    },
+    {
+     "item": "power-rangers-turbo_20220925"
+    },
+    {
+     "item": "power-rangers-in-space_202209"
+    },
+    {
+     "item": "power-rangers-lost-galaxy"
+    },
+    {
+     "item": "power-rangers-lightspeed-rescue"
+    },
+    {
+     "item": "power-rangers-time-force_20220928"
+    }
+   ],
+   "ads": [
+    "1990s ads",
+    "2000s action block ads"
+   ]
+  },
+  {
+   "number": 19,
+   "name": "Cul-de-Sac",
+   "tagline": "Ed, Edd n Eddy: five seasons of cul-de-sac scams, the holiday specials and the Big Picture Show",
+   "group": "Kids & Toons",
+   "color": "#ffe23f",
+   "era": "1999-2009",
+   "sources": [
+    {
+     "item": "ed-edd-n-eddys-big-picture-show_202509",
+     "match": "^Ed, Edd n Eddy/"
+    }
+   ],
+   "ads": [
+    "2000s kids ads"
+   ]
+  },
+  {
+   "number": 20,
+   "name": "Cartoon Cartoons",
+   "tagline": "The Cartoon Network originals of 1997-2007: Powerpuff Girls, Johnny Bravo, Courage, Cow and Chicken, I Am Weasel, Billy and Mandy",
+   "group": "Kids & Toons",
+   "color": "#3f6bff",
+   "era": "1997-2007",
+   "sources": [
+    {
+     "item": "powerpuff-girls-complete-series",
+     "match": "^Powerpuff Girls - \\d\\d,\\d\\d"
+    },
+    {
+     "item": "s-01-e-01-super-duped-bungled-in-the-jungle-bearly-enough-time"
+    },
+    {
+     "item": "courage-the-cowardly-dog-s-01-e-03_202602"
+    },
+    {
+     "item": "cow-and-chicken-s-01-e-02-the-girls-bathroom-480p-dvdrip_202411",
+     "match": "^Season"
+    },
+    {
+     "item": "fred-last-of-the-idiots",
+     "match": "(^I[ .]|Weasel|Baboon|I\\.R\\.)"
+    },
+    {
+     "item": "s-01e-15-son-of-nergal"
+    }
+   ],
+   "ads": [
+    "2000s kids ads"
+   ]
+  },
+  {
    "kind": "ads",
    "name": "2000s tween network ads",
    "sources": [

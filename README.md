@@ -46,6 +46,9 @@ in the guide and the on-screen channel display.
 | 15 | Graveyard Shift | Anthology horror and Halloween blocks |
 | 16 | Cheap Seats | Classic games: NFL, NBA, MLB, NHL, wrestling |
 | 17 | Eleven O'Clock | Off-air local and network newscasts, newsmagazines |
+| 18 | Morphin Time | Power Rangers, Mighty Morphin through Time Force |
+| 19 | Cul-de-Sac | Ed, Edd n Eddy, all seasons, specials and the movie |
+| 20 | Cartoon Cartoons | Cartoon Network originals: Powerpuff Girls, Johnny Bravo, Courage, Cow and Chicken, I Am Weasel, Billy & Mandy |
 
 The decade channels sit on the matching dial position (the 1950s on 5, the
 1960s on 6, and so on) and cut their commercial breaks from an ad pool of

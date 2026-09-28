@@ -79,6 +79,8 @@ def generic_title(t):
 
 def clean_title(name):
     t = re.sub(r"\.ia\.mp4$|\.mp4$", "", name)
+    t = t.rsplit("/", 1)[-1]  # drop folder prefixes like "Season 1/"
+    t = re.sub(r"-?\b(hevcmp4|x26[45]|hevc|h\.?26[45])\b", "", t, flags=re.I)
     t = re.sub(r"\((?:1080p|720p|480p)[^)]*\)|\[(?:1080p|720p|480p)[^\]]*\]", "", t)
     t = re.sub(r"[._]+", " ", t)
     t = re.sub(r"\s+", " ", t).strip(" -")
@@ -96,6 +98,9 @@ for ch in cfg["channels"]:
             continue
         if not meta.get("files"):
             print(f"!! {s['item']}: no files (item removed?)", file=sys.stderr)
+            continue
+        if str(meta.get("metadata", {}).get("access-restricted-item", "")).lower() == "true":
+            print(f"!! {s['item']}: access-restricted (downloads return 401), skipped", file=sys.stderr)
             continue
         rx = re.compile(s["match"], re.I) if s.get("match") else None
         files = [f for f in playable_files(meta) if not rx or rx.search(f["name"])]
