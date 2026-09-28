@@ -144,9 +144,14 @@ button.big:hover { filter: brightness(1.1); }
 .guide #guideClose { justify-self: end; font-size: 16px; }
 
 .gridwrap {
-  position: relative; flex: 1; overflow: auto; overscroll-behavior: contain;
+  position: relative; flex: 1; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
   border: 1px solid #2b4a8a; border-top: 1px solid #1c3468; border-bottom: 0;
+  scrollbar-width: thin; scrollbar-color: #2f4f96 transparent;
 }
+.gridwrap::-webkit-scrollbar { width: 8px; }
+.gridwrap::-webkit-scrollbar-track { background: transparent; }
+.gridwrap::-webkit-scrollbar-thumb { background: #2f4f96; border-radius: 8px; border: 2px solid #0a1636; }
+.gridwrap::-webkit-scrollbar-thumb:hover { background: #4a72d0; }
 .timebar, .guide .row {
   display: grid; grid-template-columns: var(--chan) 1fr; min-height: var(--rowh);
 }
