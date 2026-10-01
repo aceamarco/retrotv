@@ -1,0 +1,29 @@
+plugins {
+    id 'com.android.application'
+}
+
+// The page the app shows. Override to test against a local server:
+//   ./gradlew assembleDebug -PstartUrl=http://10.0.2.2:8080/?mode=tv
+def startUrl = providers.gradleProperty('startUrl').getOrElse('https://aceamarco.github.io/retrotv/?mode=tv')
+
+android {
+    namespace 'io.github.aceamarco.retrotv'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'io.github.aceamarco.retrotv'
+        minSdk 23
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+        buildConfigField 'String', 'START_URL', "\"${startUrl}\""
+        manifestPlaceholders = [cleartext: startUrl.startsWith('http://').toString()]
+    }
+    buildFeatures {
+        buildConfig true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

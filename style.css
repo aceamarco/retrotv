@@ -235,4 +235,29 @@ button.big:hover { filter: brightness(1.1); }
   .controls button { min-width: 0; flex: 1; padding: 0 4px; }
   .controls select { flex: 1 1 100%; max-width: none; }
 }
+/* --- TV mode (?mode=tv): full-bleed picture, no cabinet, remote-only controls --- */
+.tvmode body { padding: 0; overflow: hidden; background: #000; cursor: none; }
+.tvmode .room { max-width: none; display: block; }
+.tvmode .tv { position: fixed; inset: 0; padding: 0; border-radius: 0; background: #000; box-shadow: none; }
+.tvmode .stage, .tvmode .bezel, .tvmode .screen { height: 100%; }
+.tvmode .bezel { padding: 0; border-radius: 0; box-shadow: none; }
+.tvmode .screen { aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+.tvmode .screen video.fill { object-fit: contain; }
+.tvmode .glass::after, .tvmode .panel, .tvmode .credit, .tvmode .boot .big, .tvmode .boot .hint { display: none; }
+.tvmode .info {
+  position: fixed; left: 5vw; right: 5vw; bottom: 6vh; z-index: 20;
+  opacity: 0; transition: opacity .4s; pointer-events: none;
+}
+.tvmode .info.show { opacity: 1; }
+.tvmode .info > div { background: rgba(12, 11, 16, .88); }
+.tvmode .info::after {
+  content: "▲▼ channel · OK guide · 0-9 direct tune"; grid-column: 1 / -1; text-align: right;
+  font-size: 11px; letter-spacing: .12em; color: var(--muted); text-shadow: 0 1px 2px #000;
+}
+.tvmode .guide { padding: 5vh 5vw; backdrop-filter: none; }
+.tvmode .guide .tnav, .tvmode .guide #guideClose { display: none; }
+.tvmode .guide .row { scroll-margin-top: 64px; }
+.tvmode .guide .row.sel { background: rgba(255,255,255,.16); outline: 2px solid #fff; outline-offset: -2px; }
+.tvmode .guide footer { font-size: 12px; letter-spacing: .1em; text-align: center; color: #cfe0ff; }
+
 @media (prefers-reduced-motion: reduce) { .static, .osd, .vol-osd { transition: none; } }

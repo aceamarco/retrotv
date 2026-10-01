@@ -86,6 +86,26 @@ replace one, drop the image in `frames/src/<id>.jpeg` and run
 cuts a transparent hole, and rewrites `frames/frames.json` with each set's
 aspect ratio and screen rectangle.
 
+## Android TV / Google TV app
+
+`android/` is a small app that opens the live site in TV mode (`?mode=tv`:
+full-bleed picture, no cabinet, remote-only controls) in a full-screen
+WebView. Lineup changes pushed to `main` reach the TV without a reinstall;
+only changes under `android/` need a new APK.
+
+```sh
+android/build.sh                 # builds in Docker, no JDK or Android SDK needed
+adb connect <tv-ip>              # TV: developer options > USB debugging on
+adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+Remote: Up/Down channel · OK guide · digits direct tune · Left/Right show
+now/next. In the guide: Up/Down pick a channel · Left/Right move through
+time · OK tune · Back close. Back outside the guide exits.
+
+To try a local copy of the site on an emulator, build with
+`android/build.sh -PstartUrl=http://10.0.2.2:8080/?mode=tv`.
+
 ## Controls
 
 Up/Down: channel · Left/Right: volume · digits: direct tune · M: mute ·

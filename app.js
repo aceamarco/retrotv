@@ -10,6 +10,10 @@
   const STATIC_MS = 650;
 
   const $ = (id) => document.getElementById(id);
+  const params = new URLSearchParams(location.search);
+  // ?mode=tv: full-bleed picture driven by a remote's d-pad (what the Android TV app loads)
+  const TV = params.get("mode") === "tv";
+  if (TV) document.documentElement.classList.add("tvmode");
   const video = $("video"), staticCanvas = $("static"), osd = $("osd"), osdText = $("osdText");
   const volOsd = $("volOsd"), volBar = $("volBar"), boot = $("boot"), info = $("info");
   const guide = $("guide"), guideList = $("guideList");
@@ -17,6 +21,7 @@
   let DATA, channels = [], adPools = {}, allAds = [];
   let chIndex = 0, on = false, slot = null, tickTimer = null, osdTimer = null, volTimer = null;
   let typed = "", typedTimer = null, lastNudge = 0;
+  let guideSel = 0, bannerTimer = null;
   let audioCtx = null, noiseNode = null;
 
   /* ---------- seeded randomness ---------- */
@@ -175,7 +180,10 @@
     const seekAndPlay = () => {
       if (token !== loadToken) return;          // a newer tune() superseded this one
       try { video.currentTime = Math.min(seekTo, Math.max(0, (video.duration || Infinity) - 1)); } catch (e) {}
-      video.play().catch(() => {});
+      video.play().catch((e) => {
+        // TV mode powers on without a gesture; a plain browser only allows that muted
+        if (TV && e.name === "NotAllowedError" && !video.muted) { muteUntilGesture(); video.play().catch(() => {}); }
+      });
     };
     if (video.getAttribute("src") === target && video.readyState >= 1) {
       seekAndPlay();
@@ -186,6 +194,12 @@
     }
     video.classList.toggle("fill", slot.type === "ad");
     renderInfo();
+  }
+  function muteUntilGesture() {
+    video.muted = true;
+    const unmute = () => { video.muted = false; showVol(); };
+    document.addEventListener("pointerdown", unmute, { once: true });
+    document.addEventListener("keydown", unmute, { once: true });
   }
   function sync() {
     const ch = channels[chIndex];
@@ -201,7 +215,7 @@
       lastNudge = now;
       try { video.currentTime = want; } catch (e) {}
     }
-    if (video.paused && video.readyState >= 2) video.play().catch(() => {});
+    if (video.paused && video.readyState >= 2 && !document.hidden) video.play().catch(() => {});
   }
   video.addEventListener("error", () => {
     // file gone or unplayable: skip forward to the next slot after a beat
@@ -220,6 +234,7 @@
     if (!opts.silent) showStatic(STATIC_MS);
     sync();
     renderGuideCurrent();
+    showBanner();
   }
 
   /* ---------- UI ---------- */
@@ -234,6 +249,12 @@
     volBar.style.width = (video.muted ? 0 : video.volume * 100) + "%";
     volOsd.classList.add("show");
     clearTimeout(volTimer); volTimer = setTimeout(() => volOsd.classList.remove("show"), 1800);
+  }
+  // TV mode: the now/next strip is a banner over the picture that fades out
+  function showBanner() {
+    if (!TV) return;
+    info.classList.add("show");
+    clearTimeout(bannerTimer); bannerTimer = setTimeout(() => info.classList.remove("show"), 6000);
   }
   function fmt(sec) { sec = Math.max(0, Math.round(sec)); const m = Math.floor(sec / 60), s = sec % 60; return m + ":" + String(s).padStart(2, "0"); }
   function renderInfo() {
@@ -323,7 +344,16 @@
     renderGuideCurrent();
   }
   function renderGuideCurrent() {
-    guideList.querySelectorAll(".row").forEach((r) => r.classList.toggle("current", Number(r.dataset.index) === chIndex));
+    guideList.querySelectorAll(".row").forEach((r) => {
+      r.classList.toggle("current", Number(r.dataset.index) === chIndex);
+      r.classList.toggle("sel", TV && Number(r.dataset.index) === guideSel);
+    });
+  }
+  function moveGuideSel(dir) {
+    guideSel = (guideSel + dir + channels.length) % channels.length;
+    renderGuideCurrent();
+    const row = guideList.querySelector(".row.sel");
+    if (row) row.scrollIntoView({ block: "nearest" });
   }
   function shiftGuide(dir) {
     const w = guideWindow();
@@ -336,7 +366,7 @@
     guide.hidden = !show;
     clearInterval(guideTimer); guideTimer = null;
     if (show) {
-      guideStart = null;
+      guideStart = null; guideSel = chIndex;
       renderGuide();
       guideTimer = setInterval(renderGuide, 30000);
       const cur = guideList.querySelector(".row.current");
@@ -387,8 +417,39 @@
   $("guideClose").addEventListener("click", () => toggleGuide(false));
   $("screen").addEventListener("click", (e) => { if (on && e.target !== boot && !boot.contains(e.target)) act("chup"); });
 
+  /* Remote control (TV mode). The d-pad drives the guide while it is open and
+     the channels otherwise. */
+  function tvKey(k) {
+    if (!guide.hidden) {
+      if (k === "ArrowUp" || k === "ArrowDown") moveGuideSel(k === "ArrowUp" ? -1 : 1);
+      else if (k === "ArrowLeft" || k === "ArrowRight") shiftGuide(k === "ArrowLeft" ? -1 : 1);
+      else if (k === "Enter") { powerOn(); tune(guideSel); toggleGuide(false); }
+      else if (k === "Back" || k === "Guide") toggleGuide(false);
+      else return false;
+      return true;
+    }
+    if (k === "Enter" || k === "Guide") toggleGuide(true);
+    else if (k === "ArrowLeft" || k === "ArrowRight" || k === "Info") showBanner();
+    else if (k === "ChannelUp" || k === "PageUp") act("chup");
+    else if (k === "ChannelDown" || k === "PageDown") act("chdown");
+    else return false;
+    return true;
+  }
+  if (TV) {
+    // The Android app forwards remote keys here; true means the page handled it
+    // (the app exits on a Back that comes back false).
+    window.retroTV = { key: (k) => !document.dispatchEvent(new KeyboardEvent("keydown", { key: k, cancelable: true })) };
+    $("guideKeys").textContent = "▲▼ channel · ◀▶ time · OK tune · BACK close";
+    // the app going to the background must not keep playing audio
+    document.addEventListener("visibilitychange", () => {
+      if (!on) return;
+      if (document.hidden) video.pause(); else sync();
+    });
+  }
+
   document.addEventListener("keydown", (e) => {
     if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+    if (TV && tvKey(e.key)) { e.preventDefault(); return; }
     if (e.key >= "0" && e.key <= "9") {
       typed += e.key; showOsd(typed.padStart(2, "-"));
       clearTimeout(typedTimer);
@@ -396,7 +457,7 @@
       if (typed.length >= 2) commit(); else typedTimer = setTimeout(commit, 1200);
       return;
     }
-    if (e.key === "t" || e.key === "T") { cycleFrame(e.shiftKey ? -1 : 1); return; }
+    if (!TV && (e.key === "t" || e.key === "T")) { cycleFrame(e.shiftKey ? -1 : 1); return; }
     const map = { ArrowUp: "chup", ArrowDown: "chdown", ArrowRight: "volup", ArrowLeft: "voldown", m: "mute", f: "full", g: "guide", p: "power", Escape: null };
     if (e.key === "Escape") { toggleGuide(false); return; }
     if (e.key in map) { e.preventDefault(); act(map[e.key]); }
@@ -452,12 +513,12 @@
     applyFrame(ids[(i + dir + ids.length) % ids.length]);
   }
   frameSel.addEventListener("change", () => applyFrame(frameSel.value));
-  fetch("frames/frames.json").then((r) => r.json()).then((list) => {
+  if (!TV) fetch("frames/frames.json").then((r) => r.json()).then((list) => {
     frames = list;
     for (const f of frames) { const op = document.createElement("option"); op.value = f.id; op.textContent = f.name; frameSel.appendChild(op); }
     let saved = "classic";
     try { saved = localStorage.getItem("retrotv.frame") || "classic"; } catch (e) {}
-    const q = new URLSearchParams(location.search).get("tv");
+    const q = params.get("tv");
     applyFrame(q || saved);
   }).catch(() => {});
 
@@ -467,18 +528,12 @@
     channels = d.channels.slice().sort((a, b) => a.number - b.number);
     d.ads.forEach((p) => { adPools[p.name] = p.videos; });
     allAds = d.ads.flatMap((p) => p.videos);
-    video.volume = 0.6;
-    const want = Number(new URLSearchParams(location.search).get("ch"));
-    if (want) {
-      const i = channels.findIndex((c) => c.number === want);
-      if (i >= 0) {
-        video.muted = true;               // autoplay without a gesture must be muted
-        powerOn(); tune(i, { silent: true });
-        const unmute = () => { video.muted = false; showVol(); };
-        document.addEventListener("pointerdown", unmute, { once: true });
-        document.addEventListener("keydown", unmute, { once: true });
-      }
-    }
+    video.volume = TV ? 1 : 0.6;          // on a TV the set's own remote is the volume control
+    const want = Number(params.get("ch"));
+    const i = want ? channels.findIndex((c) => c.number === want) : -1;
+    if (i >= 0 && !TV) muteUntilGesture();  // autoplay without a gesture must be muted
+    if (i >= 0 || TV) powerOn();
+    if (i >= 0) tune(i, { silent: true });
   }).catch((e) => {
     boot.querySelector("p").textContent = "Could not load channels.json. Serve this folder over HTTP (e.g. python3 -m http.server).";
     $("powerBtn").disabled = true;
